@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Search, Briefcase, FileText, Calendar, Building, ChevronRight, 
+  Search, Briefcase, Calendar, Building,
   AlertCircle, Loader2, Clock, MapPin, Scale, Copy, CheckCircle2,
   ShieldCheck
 } from 'lucide-react';
@@ -97,7 +97,6 @@ export default function App() {
       sort: [ { "@timestamp": { order: "desc" } } ]
     };
 
-    // A URL aponta para o Proxy Local criado no nginx.conf (passo 9).
     const finalUrl = `/api-datajud/api_publica_${tribunal}/_search`;
 
     try {
@@ -120,7 +119,7 @@ export default function App() {
       const newHistory = [{ term: searchTerm, tribunal, date: new Date().toISOString() }, ...history.filter(h => h.term !== searchTerm)].slice(0, 10);
       setHistory(newHistory);
     } catch (err) {
-      setError("Erro de Conexão. Se você estiver vendo isso no Coolify, verifique se o Nginx Proxy está configurado corretamente conforme o nginx.conf.");
+      setError("Falha de Conexão: Verifique se o Nginx está a encaminhar os pedidos corretamente no servidor.");
     } finally {
       setLoading(false);
     }
@@ -135,7 +134,7 @@ export default function App() {
         </div>
         <div className="p-4 flex-1 overflow-y-auto">
           <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center">
-            <Clock className="w-4 h-4 mr-2" /> Histórico Local
+            <Clock className="w-4 h-4 mr-2" /> Histórico
           </h2>
           {history.map((h, i) => (
             <button key={i} onClick={() => { setSearchTerm(h.term); setTribunal(h.tribunal); }} className="w-full text-left bg-slate-50 p-3 rounded-xl hover:bg-indigo-50 mb-2 border border-transparent transition-all">
@@ -152,11 +151,11 @@ export default function App() {
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h2 className="text-3xl font-black text-slate-900 tracking-tight">Busca Processual</h2>
-                <p className="text-slate-500">Acesso direto à base nacional de dados do Poder Judiciário.</p>
+                <p className="text-slate-500">Base nacional de dados do Poder Judiciário.</p>
               </div>
               <div className="hidden md:flex items-center space-x-2 text-emerald-600 bg-emerald-50 px-4 py-2 rounded-full border border-emerald-100">
                 <ShieldCheck className="w-4 h-4" />
-                <span className="text-xs font-bold uppercase">Conexão Segura</span>
+                <span className="text-xs font-bold uppercase">Ligação Segura</span>
               </div>
             </div>
             
